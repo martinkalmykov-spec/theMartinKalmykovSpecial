@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Martin Kalmyov's Emoji Catcher</title>
+    <style>
+        body {
+            font-family: Comic Sans MS, Arial, sans-serif;
+            text-align: center;
+            background-color: #fffacd;
+            margin: 0;
+            overflow: hidden;
+        }
+        h1 {
+            color: #ff69b4;
+        }
+        #score {
+            font-size: 24px;
+            color: #32cd32;
+        }
+        .emoji {
+            position: absolute;
+            font-size: 50px;
+            cursor: pointer;
+            user-select: none;
+        }
+        #message {
+            font-size: 20px;
+            color: #ff4500;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Martin Kalmyov's Emoji Catcher!</h1>
+    <p>Click the flying emoji as fast as you can!</p>
+    <p id="score">Score: 0</p>
+    <p id="message"></p>
+
+    <script>
+        let score = 0;
+        const scoreDisplay = document.getElementById('score');
+        const message = document.getElementById('message');
+        const funnyMessages = [
+            "Martin, you ninja-clicker!",
+            "Whoa! That emoji didn’t see that coming!",
+            "Epic catch! Keep it up!",
+            "Faster than a rocket, Martin!",
+            "Emoji defeated! Victory is yours!"
+        ];
+
+        // Create an emoji element
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji');
+        emoji.textContent = "🐒"; // you can change emoji to anything funny
+        document.body.appendChild(emoji);
+
+        function randomPosition() {
+            const x = Math.random() * (window.innerWidth - 50);
+            const y = Math.random() * (window.innerHeight - 50);
+            emoji.style.left = x + "px";
+            emoji.style.top = y + "px";
+        }
+
+        emoji.addEventListener('click', () => {
+            score++;
+            scoreDisplay.textContent = "Score: " + score;
+            randomPosition();
+            // Show funny message every 3 clicks
+            if (score % 3 === 0) {
+                const randomIndex = Math.floor(Math.random() * funnyMessages.length);
+                message.textContent = funnyMessages[randomIndex];
+            }
+        });
+
+        // Move emoji every 2 seconds to make it harder
+        setInterval(randomPosition, 2000);
+
+        // Start at random position
+        randomPosition();
+    </script>
+</body>
+</html>
